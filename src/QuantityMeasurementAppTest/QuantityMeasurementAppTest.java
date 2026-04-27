@@ -1,79 +1,69 @@
-package QuantityMeasurementAppTest;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
     @Test
-    void testYardToFeet(){
-        assertTrue(
-                new QuantityMeasurementApp.QuantityLength(
+    void testFeetToInches() {
+        assertEquals(
+                12.0,
+                QuantityMeasurementApp.convert(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.YARD)
-                        .equals(
-                                new QuantityMeasurementApp.QuantityLength(
-                                        3.0,
-                                        QuantityMeasurementApp.LengthUnit.FEET))
+                        QuantityMeasurementApp.LengthUnit.FEET,
+                        QuantityMeasurementApp.LengthUnit.INCH
+                ),
+                0.0001
         );
     }
 
     @Test
-    void testYardToInches(){
-        assertTrue(
-                new QuantityMeasurementApp.QuantityLength(
-                        1.0,
-                        QuantityMeasurementApp.LengthUnit.YARD)
-                        .equals(
-                                new QuantityMeasurementApp.QuantityLength(
-                                        36.0,
-                                        QuantityMeasurementApp.LengthUnit.INCH))
+    void testInchesToFeet() {
+        assertEquals(
+                2.0,
+                QuantityMeasurementApp.convert(
+                        24.0,
+                        QuantityMeasurementApp.LengthUnit.INCH,
+                        QuantityMeasurementApp.LengthUnit.FEET
+                ),
+                0.0001
         );
     }
 
     @Test
-    void testCentimeterToInch(){
-        assertTrue(
-                new QuantityMeasurementApp.QuantityLength(
+    void testYardToFeet() {
+        assertEquals(
+                3.0,
+                QuantityMeasurementApp.convert(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.CENTIMETER)
-                        .equals(
-                                new QuantityMeasurementApp.QuantityLength(
-                                        0.393701,
-                                        QuantityMeasurementApp.LengthUnit.INCH))
+                        QuantityMeasurementApp.LengthUnit.YARD,
+                        QuantityMeasurementApp.LengthUnit.FEET
+                ),
+                0.0001
         );
     }
 
     @Test
-    void testDifferentValues(){
-        assertFalse(
-                new QuantityMeasurementApp.QuantityLength(
-                        1.0,
-                        QuantityMeasurementApp.LengthUnit.YARD)
-                        .equals(
-                                new QuantityMeasurementApp.QuantityLength(
-                                        2.0,
-                                        QuantityMeasurementApp.LengthUnit.FEET))
+    void testCentimeterToInch() {
+        assertEquals(
+                1.0,
+                QuantityMeasurementApp.convert(
+                        2.54,
+                        QuantityMeasurementApp.LengthUnit.CENTIMETER,
+                        QuantityMeasurementApp.LengthUnit.INCH
+                ),
+                0.0001
         );
     }
 
     @Test
-    void testSameReference(){
-        QuantityMeasurementApp.QuantityLength q=
-                new QuantityMeasurementApp.QuantityLength(
+    void testInvalidUnitThrows() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> QuantityMeasurementApp.convert(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.YARD);
-
-        assertTrue(q.equals(q));
-    }
-
-    @Test
-    void testNullComparison(){
-        QuantityMeasurementApp.QuantityLength q=
-                new QuantityMeasurementApp.QuantityLength(
-                        1.0,
-                        QuantityMeasurementApp.LengthUnit.YARD);
-
-        assertFalse(q.equals(null));
+                        null,
+                        QuantityMeasurementApp.LengthUnit.INCH
+                )
+        );
     }
 }
