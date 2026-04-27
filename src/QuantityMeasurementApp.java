@@ -2,7 +2,9 @@ public class QuantityMeasurementApp {
 
     public enum LengthUnit {
         FEET(1.0),
-        INCH(1.0/12.0);
+        INCH(1.0/12.0),
+        YARD(3.0),
+        CENTIMETER(0.393701/12.0);
 
         private final double factor;
 
@@ -34,7 +36,22 @@ public class QuantityMeasurementApp {
             if(obj==null || getClass()!=obj.getClass()) return false;
 
             QuantityLength other=(QuantityLength)obj;
-            return Double.compare(this.toFeet(),other.toFeet())==0;
+
+            return Double.compare(
+                    this.toFeet(),
+                    other.toFeet()
+            )==0;
         }
+    }
+
+    public static void main(String[] args){
+
+        QuantityLength q1=
+                new QuantityLength(1.0,LengthUnit.YARD);
+
+        QuantityLength q2=
+                new QuantityLength(3.0,LengthUnit.FEET);
+
+        System.out.println(q1.equals(q2));
     }
 }

@@ -6,50 +6,50 @@ import static org.junit.jupiter.api.Assertions.*;
 public class QuantityMeasurementAppTest {
 
     @Test
-    void testEquality_FeetToFeet_SameValue(){
+    void testYardToFeet(){
         assertTrue(
                 new QuantityMeasurementApp.QuantityLength(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.FEET)
+                        QuantityMeasurementApp.LengthUnit.YARD)
                         .equals(
                                 new QuantityMeasurementApp.QuantityLength(
-                                        1.0,
+                                        3.0,
                                         QuantityMeasurementApp.LengthUnit.FEET))
         );
     }
 
     @Test
-    void testEquality_InchToInch_SameValue(){
+    void testYardToInches(){
         assertTrue(
                 new QuantityMeasurementApp.QuantityLength(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.INCH)
+                        QuantityMeasurementApp.LengthUnit.YARD)
                         .equals(
                                 new QuantityMeasurementApp.QuantityLength(
-                                        1.0,
+                                        36.0,
                                         QuantityMeasurementApp.LengthUnit.INCH))
         );
     }
 
     @Test
-    void testEquality_FeetToInch_EquivalentValue(){
+    void testCentimeterToInch(){
         assertTrue(
                 new QuantityMeasurementApp.QuantityLength(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.FEET)
+                        QuantityMeasurementApp.LengthUnit.CENTIMETER)
                         .equals(
                                 new QuantityMeasurementApp.QuantityLength(
-                                        12.0,
+                                        0.393701,
                                         QuantityMeasurementApp.LengthUnit.INCH))
         );
     }
 
     @Test
-    void testEquality_DifferentValue(){
+    void testDifferentValues(){
         assertFalse(
                 new QuantityMeasurementApp.QuantityLength(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.FEET)
+                        QuantityMeasurementApp.LengthUnit.YARD)
                         .equals(
                                 new QuantityMeasurementApp.QuantityLength(
                                         2.0,
@@ -58,22 +58,22 @@ public class QuantityMeasurementAppTest {
     }
 
     @Test
-    void testNullComparison(){
-        QuantityMeasurementApp.QuantityLength q=
-                new QuantityMeasurementApp.QuantityLength(
-                        1.0,
-                        QuantityMeasurementApp.LengthUnit.FEET);
-
-        assertFalse(q.equals(null));
-    }
-
-    @Test
     void testSameReference(){
         QuantityMeasurementApp.QuantityLength q=
                 new QuantityMeasurementApp.QuantityLength(
                         1.0,
-                        QuantityMeasurementApp.LengthUnit.FEET);
+                        QuantityMeasurementApp.LengthUnit.YARD);
 
         assertTrue(q.equals(q));
+    }
+
+    @Test
+    void testNullComparison(){
+        QuantityMeasurementApp.QuantityLength q=
+                new QuantityMeasurementApp.QuantityLength(
+                        1.0,
+                        QuantityMeasurementApp.LengthUnit.YARD);
+
+        assertFalse(q.equals(null));
     }
 }
