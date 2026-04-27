@@ -23,8 +23,19 @@ public class QuantityMeasurementApp {
         private final LengthUnit unit;
 
         public QuantityLength(double value, LengthUnit unit){
+            if(unit == null || !Double.isFinite(value)){
+                throw new IllegalArgumentException();
+            }
             this.value = value;
             this.unit = unit;
+        }
+
+        public double getValue(){
+            return value;
+        }
+
+        public LengthUnit getUnit(){
+            return unit;
         }
 
         private double toFeet(){
@@ -33,11 +44,28 @@ public class QuantityMeasurementApp {
 
         public QuantityLength convertTo(LengthUnit target){
             double convertedValue =
-                    toFeet() / target.getFactor();
+                    toFeet()/target.getFactor();
 
             return new QuantityLength(
                     convertedValue,
                     target
+            );
+        }
+
+        public QuantityLength add(QuantityLength other){
+            if(other == null){
+                throw new IllegalArgumentException();
+            }
+
+            double totalFeet =
+                    this.toFeet() + other.toFeet();
+
+            double resultValue =
+                    totalFeet / this.unit.getFactor();
+
+            return new QuantityLength(
+                    resultValue,
+                    this.unit
             );
         }
 
@@ -46,17 +74,15 @@ public class QuantityMeasurementApp {
             if(this == obj)
                 return true;
 
-            if(obj == null ||
-                    getClass()!=obj.getClass())
+            if(obj == null || getClass()!=obj.getClass())
                 return false;
 
             QuantityLength other =
-                    (QuantityLength) obj;
+                    (QuantityLength)obj;
 
-            return Double.compare(
-                    this.toFeet(),
-                    other.toFeet()
-            ) == 0;
+            return Math.abs(
+                    this.toFeet()-other.toFeet()
+            ) < 0.0001;
         }
 
         @Override
@@ -77,34 +103,26 @@ public class QuantityMeasurementApp {
         }
 
         return value *
-                (source.getFactor() /
+                (source.getFactor()/
                         target.getFactor());
     }
 
     public static void main(String[] args) {
 
-        System.out.println(
-                convert(
+        QuantityLength a =
+                new QuantityLength(
                         1.0,
-                        LengthUnit.FEET,
-                        LengthUnit.INCH
-                )
-        );
-
-        System.out.println(
-                convert(
-                        3.0,
-                        LengthUnit.YARD,
                         LengthUnit.FEET
-                )
-        );
+                );
+
+        QuantityLength b =
+                new QuantityLength(
+                        12.0,
+                        LengthUnit.INCH
+                );
 
         System.out.println(
-                convert(
-                        36.0,
-                        LengthUnit.INCH,
-                        LengthUnit.YARD
-                )
+                a.add(b)
         );
     }
 }
